@@ -1,45 +1,56 @@
-import React, { useEffect } from 'react';
-import Typical from 'react-typical';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import './App.css';
+import TerminalPrompt from './components/TerminalPrompt';
+import TerminalContent from './components/TerminalContent';
 
 function App() {
-  const navigate = useNavigate();
+  const [lines, setLines] = useState([
+    'Welcome to JG’s Terminal Portfolio!',
+    "Type 'help' to see available commands.\n"
+  ]);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      navigate('/home');
-    }, 5500);
+  const handleCommand = (input) => {
+    const cmd = input.trim().toLowerCase();
+    let response = [];
 
-    const skipOnKey = () => {
-      clearTimeout(timeout);
-      navigate('/home');
-    };
+    switch (cmd) {
+      case 'help':
+        response = [
+          'Available commands:',
+          'about - Learn about me',
+          'projects - See my work',
+          'clear - Clear the screen',
+        ];
+        break;
+      case 'about':
+        response = [
+          'Hi, I’m Marcus Chuong. I build cool things with code.',
+          'I love clean design and clever ideas.'
+        ];
+        break;
+      case 'projects':
+        response = [
+          'Projects:',
+          '- Portfolio Website',
+          '- API-integrated React App',
+          '- Open Source Contributions'
+        ];
+        break;
+      case 'clear':
+        setLines([]);
+        return;
+      default:
+        response = [`Command not found: ${cmd}`, `Type 'help' for a list of commands.`];
+    }
 
-    window.addEventListener('keydown', skipOnKey);
-    return () => window.removeEventListener('keydown', skipOnKey);
-  }, [navigate]);
+    setLines((prev) => [...prev, `$ ${cmd}`, ...response]);
+  };
 
   return (
     <div className="screen-container">
       <div className="terminal-window">
-        <div className="typing-line">
-          <Typical
-            steps={[
-              'Booting up system...',
-              1000,
-              'Loading user interface...',
-              800,
-              'Initializing modules...',
-              800,
-              'Welcome, JG',
-              1500,
-            ]}
-            loop={1}
-            wrapper="p"
-          />
-        </div>
-        <p className="hint">Press any key to continue...</p>
+        <TerminalContent lines={lines} />
+        <TerminalPrompt onCommand={handleCommand} />
       </div>
     </div>
   );
