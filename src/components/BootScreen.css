@@ -1,0 +1,41 @@
+.boot-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    color: white;
+  }
+  
+  .apple-logo {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+  }
+  
+  .progress-bar {
+    width: 200px;
+    height: 6px;
+    background-color: #333;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  
+  .progress {
+    height: 100%;
+    width: 0%;
+    background-color: #ccc;
+    animation: loadBar 4s ease forwards;
+  }
+  
+  @keyframes loadBar {
+    100% {
+      width: 100%;
+    }
+  }
+  

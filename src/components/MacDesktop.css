@@ -1,0 +1,52 @@
+/* MacDesktop.css */
+.mac-desktop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../assets/mac-wallpaper.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 900;
+  }
+  
+  .terminal-icon {
+    position: absolute;
+    bottom: 40px;
+    left: 60px;
+    width: 64px;
+    height: 64px;
+    transition: transform 0.3s ease;
+    z-index: 1000; /* keep icon above other content */
+  }
+  
+  .cursor {
+    position: absolute;
+    top: 60%;
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    background: white;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    animation: moveCursor 2s ease-in-out forwards;
+    z-index: 950;
+  }
+  
+  .cursor.clicked {
+    transform: scale(0.85);
+    opacity: 0.5;
+  }
+  
+  @keyframes moveCursor {
+    0% {
+      top: 60%;
+      left: 10%;
+      opacity: 1;
+    }
+    100% {
+      top: calc(100% - 60px);
+      left: 72px;
+      opacity: 1;
+    }
+  }

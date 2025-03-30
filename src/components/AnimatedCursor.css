@@ -1,0 +1,32 @@
+.fake-cursor {
+    position: absolute;
+    top: 70%;
+    left: 5%;
+    width: 20px;
+    height: 20px;
+    background: white;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    animation: moveAndClick 1s ease-in-out forwards;
+    z-index: 1001;
+  }
+  
+  @keyframes moveAndClick {
+    0% {
+      top: 70%;
+      left: 5%;
+      transform: scale(1);
+    }
+    50% {
+      top: 50%;
+      left: 50%;
+      transform: scale(1);
+    }
+    75% {
+      transform: scale(0.85);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+  
