@@ -1,5 +1,6 @@
+// BootScreen.js
 import React, { useEffect } from 'react';
-import './BootScreen.css';
+import './BootScreen.css'; // Ensure you have this CSS file for styling
 
 function BootScreen({ onFinish }) {
   useEffect(() => {

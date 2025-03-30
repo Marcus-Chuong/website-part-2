@@ -2,27 +2,91 @@ body, html, #root {
   width: 100vw;
   height: 100vh;
   margin: 0;
-  background-color: #0a0a0a;
+  background-color: #000;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: Menlo, Monaco, 'Courier New', monospace;
   color: #d0d0d0;
+  overflow: hidden;
+}
+
+.mac-background {
+  background-color: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 0;
+}
+
+.boot-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  color: white;
+}
+
+.apple-logo {
+  font-size: 5rem;
+  color: white;
+  animation: appleFade 1.5s ease-in-out infinite alternate;
+  margin-bottom: 2rem;
+}
+
+.progress-bar {
+  width: 200px;
+  height: 6px;
+  background: #333;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  background: #ccc;
+  animation: load 4s ease forwards;
+}
+
+@keyframes load {
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes appleFade {
+  0% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .terminal-wrapper {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 90%;
   max-width: 850px;
-  height: auto;
-  background-color: #1e1e1e;
-  border-radius: 8px;
-  box-shadow: 0 0 60px rgba(0, 255, 100, 0.1);
+  height: 600px;
+  background-color: rgba(30, 30, 30, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   z-index: 1;
+  cursor: grab;
+  animation: macTerminalOpen 0.5s ease-out forwards;
 }
 
 .terminal-top-bar {
@@ -32,6 +96,8 @@ body, html, #root {
   align-items: center;
   padding-left: 1rem;
   gap: 8px;
+  cursor: grab;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .btn {
@@ -54,12 +120,15 @@ body, html, #root {
 }
 
 .terminal-body {
-  padding: 1rem;
+  padding: 1.5rem 2rem;
   font-size: 1rem;
-  line-height: 1.3; /* ← This controls line spacing */
-  white-space: pre-wrap;
-  font-family: Menlo, Monaco, 'Courier New', monospace;
-  color: #d0d0d0;
+  line-height: 1.9;
+  font-family: 'Menlo', 'Courier New', monospace;
+  color: #f5f5f5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  height: calc(100% - 36px);
+  overflow-y: auto;
 }
 
 .terminal-content {
@@ -82,36 +151,20 @@ body, html, #root {
   font-size: 1rem;
 }
 
-.animate-terminal {
-  animation: openTerminal 0.8s ease-out;
+.typing-cursor {
+  display: inline-block;
+  width: 10px;
+  height: 1em;
+  background-color: #d0d0d0;
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+  vertical-align: bottom;
 }
 
-@keyframes openTerminal {
-  from {
-    transform: scale(0.8) translateY(100px);
+@keyframes blink {
+  50% {
     opacity: 0;
   }
-  to {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
-}
-
-.mac-background {
-  background-image: url('./assets/mac-wallpaper.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  z-index: 0;
-}
-
-.open-terminal-animation {
-  animation: macTerminalOpen 0.5s ease-out forwards;
 }
 
 @keyframes macTerminalOpen {
@@ -128,54 +181,4 @@ body, html, #root {
 .max-terminal-height {
   max-height: 80vh;
   overflow-y: auto;
-}
-
-.mac-background {
-  background-image: url('./assets/mac-wallpaper.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  z-index: 0;
-}
-
-.terminal-wrapper {
-  width: 90%;
-  max-width: 850px;
-  background-color: #1e1e1e;
-  border-radius: 8px;
-  box-shadow: 0 0 60px rgba(0, 255, 100, 0.1);
-  overflow: hidden;
-  z-index: 1;
-  cursor: grab;
-}
-
-.terminal-top-bar {
-  background-color: #2e2e2e;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  padding-left: 1rem;
-  gap: 8px;
-  cursor: grab;
-}
-
-.typing-cursor {
-  display: inline-block;
-  width: 10px;
-  height: 1em;
-  background-color: #d0d0d0;
-  margin-left: 2px;
-  animation: blink 1s step-end infinite;
-  vertical-align: bottom;
-}
-
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
 }

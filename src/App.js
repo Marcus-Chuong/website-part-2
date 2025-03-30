@@ -16,27 +16,33 @@ function App() {
   const [typingSpeed, setTypingSpeed] = useState(30);
 
   const terminalRef = useRef(null);
-  const [position, setPosition] = useState({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  const [position, setPosition] = useState({ x: 300, y: 200 });
   const [dragging, setDragging] = useState(false);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const centerX = window.innerWidth / 2 - 425;
+    const centerY = window.innerHeight / 2 - 200;
+    setPosition({ x: centerX, y: centerY });
+  }, []);
 
   const startDrag = (e) => {
     if (e.target.closest('.terminal-top-bar')) {
       const rect = terminalRef.current.getBoundingClientRect();
-      setOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+      setDragOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
       setDragging(true);
     }
   };
 
+  const stopDrag = () => setDragging(false);
+
   const handleMouseMove = (e) => {
     if (!dragging) return;
     setPosition({
-      x: e.clientX - offset.x + terminalRef.current.offsetWidth / 2,
-      y: e.clientY - offset.y + terminalRef.current.offsetHeight / 2,
+      x: e.clientX - dragOffset.x,
+      y: e.clientY - dragOffset.y,
     });
   };
-
-  const stopDrag = () => setDragging(false);
 
   useEffect(() => {
     document.addEventListener('mousemove', handleMouseMove);
@@ -57,13 +63,11 @@ function App() {
     setIsTyping(true);
     setCurrentTypingLine('');
     let typed = '';
-
     for (let i = 0; i < line.length; i++) {
       typed += line[i];
       setCurrentTypingLine(typed);
       await delay(typingSpeed);
     }
-
     setLines((prev) => [...prev, typed]);
     setCurrentTypingLine('');
     setIsTyping(false);
@@ -178,8 +182,7 @@ function App() {
           style={{
             position: 'absolute',
             top: position.y,
-            left: position.x,
-            transform: 'translate(-50%, -50%)'
+            left: position.x
           }}
         >
           <div className="terminal-top-bar">
