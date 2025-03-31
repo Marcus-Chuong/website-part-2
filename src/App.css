@@ -74,10 +74,12 @@ body, html, #root {
 }
 
 .terminal-wrapper {
-  position: absolute;
-  width: 90%;
-  max-width: 850px;
-  height: 600px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 96vw;
+  height: 92vh;
   background-color: rgba(30, 30, 30, 0.85);
   backdrop-filter: blur(8px);
   border-radius: 12px;
@@ -85,8 +87,7 @@ body, html, #root {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   z-index: 1;
-  cursor: grab;
-  animation: macTerminalOpen 0.5s ease-out forwards;
+  cursor: default;
 }
 
 .terminal-top-bar {
@@ -96,7 +97,6 @@ body, html, #root {
   align-items: center;
   padding-left: 1rem;
   gap: 8px;
-  cursor: grab;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -164,17 +164,6 @@ body, html, #root {
 @keyframes blink {
   50% {
     opacity: 0;
-  }
-}
-
-@keyframes macTerminalOpen {
-  0% {
-    opacity: 0;
-    transform: scale(0.8) translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
   }
 }
 

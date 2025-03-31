@@ -137,17 +137,7 @@ function App() {
       {bootStep === 'boot' && <BootScreen onFinish={handleBootFinish} />}
       {bootStep === 'desktop' && !terminalOpened && <MacDesktop onOpenTerminal={() => {}} />}
       {terminalOpened && (
-        <div
-          className="terminal-wrapper"
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '95vw',
-            height: '90vh'
-          }}
-        >
+        <div className="terminal-wrapper">
           <div className="terminal-top-bar">
             <span className="btn red" />
             <span className="btn yellow" />
