@@ -3,15 +3,10 @@ import React from 'react';
 function TerminalContent({ lines, isTyping, currentTypingLine }) {
   return (
     <div className="terminal-content">
-      {lines.map((line, idx) => (
-        <div key={idx}>{line}</div>
+      {lines.map((line, i) => (
+        <div key={i}>{line}</div>
       ))}
-      {isTyping && (
-        <div>
-          {currentTypingLine}
-          <span className="typing-cursor" />
-        </div>
-      )}
+      {isTyping && <div>{currentTypingLine}<span className="typing-cursor"></span></div>}
     </div>
   );
 }

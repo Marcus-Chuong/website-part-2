@@ -136,6 +136,12 @@ function App() {
     }, 1000);
   };
 
+  useEffect(() => {
+    if (terminalOpened && lines.length === 0) {
+      runTerminalBoot();
+    }
+  }, [terminalOpened]);
+
   return (
     <div className="mac-background">
       {bootStep === 'boot' && <BootScreen onFinish={handleBootFinish} />}
@@ -154,11 +160,6 @@ function App() {
           </div>
           <div className="title-centered">Terminal — Marcus Chuong</div>
           <div className="terminal-body">
-            <div className="terminal-output">
-              {lines.slice(-100).map((line, i) => (
-                <div key={i}>{line}</div>
-              ))}
-            </div>
             <TerminalContent
               lines={lines}
               isTyping={isTyping}
