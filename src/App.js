@@ -1,5 +1,5 @@
 // App.js
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import TerminalPrompt from './components/TerminalPrompt';
 import TerminalContent from './components/TerminalContent';
 import BootScreen from './components/BootScreen';
@@ -14,44 +14,6 @@ function App() {
   const [isTyping, setIsTyping] = useState(false);
   const [currentTypingLine, setCurrentTypingLine] = useState('');
   const [typingSpeed, setTypingSpeed] = useState(30);
-
-  const terminalRef = useRef(null);
-  const [position, setPosition] = useState({ x: 300, y: 200 });
-  const [dragging, setDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const centerX = window.innerWidth / 2 - 425;
-    const centerY = window.innerHeight / 2 - 200;
-    setPosition({ x: centerX, y: centerY });
-  }, []);
-
-  const startDrag = (e) => {
-    if (e.target.closest('.terminal-top-bar')) {
-      const rect = terminalRef.current.getBoundingClientRect();
-      setDragOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-      setDragging(true);
-    }
-  };
-
-  const stopDrag = () => setDragging(false);
-
-  const handleMouseMove = (e) => {
-    if (!dragging) return;
-    setPosition({
-      x: e.clientX - dragOffset.x,
-      y: e.clientY - dragOffset.y,
-    });
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', stopDrag);
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', stopDrag);
-    };
-  });
 
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -167,7 +129,7 @@ function App() {
     setTimeout(() => {
       setTerminalOpened(true);
       runTerminalBoot();
-    }, 3000);
+    }, 1000);
   };
 
   return (
@@ -177,12 +139,13 @@ function App() {
       {terminalOpened && (
         <div
           className="terminal-wrapper"
-          ref={terminalRef}
-          onMouseDown={startDrag}
           style={{
             position: 'absolute',
-            top: position.y,
-            left: position.x
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '95vw',
+            height: '90vh'
           }}
         >
           <div className="terminal-top-bar">
