@@ -84,7 +84,7 @@ body, html, #root {
   height: 92vh;
   background-color: rgba(30, 30, 30, 0.85);
   backdrop-filter: blur(8px);
-  border-radius: 12px;
+  border-radius: 10px 10px 0 0;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
   overflow: hidden;
@@ -93,8 +93,8 @@ body, html, #root {
 }
 
 .terminal-top-bar {
-  background-color: #2e2e2e;
-  height: 36px;
+  background-color: #1e1e1e;
+  height: 28px;
   display: flex;
   align-items: center;
   padding-left: 1rem;
@@ -131,6 +131,7 @@ body, html, #root {
   text-rendering: optimizeLegibility;
   height: calc(100% - 36px);
   overflow-y: auto;
+  letter-spacing: -0.3px;
 }
 
 .terminal-content {
@@ -172,4 +173,24 @@ body, html, #root {
 .max-terminal-height {
   max-height: 80vh;
   overflow-y: auto;
+}
+
+.terminal-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1em;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(46, 46, 46, 0.8);
+  color: #f0f0f0;
+}
+
+.title-centered {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  color: #ccc;
+  font-size: 0.95rem;
+  pointer-events: none;
 }

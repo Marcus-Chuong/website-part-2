@@ -135,7 +135,12 @@ function App() {
   return (
     <div className="mac-background">
       {bootStep === 'boot' && <BootScreen onFinish={handleBootFinish} />}
-      {bootStep === 'desktop' && !terminalOpened && <MacDesktop onOpenTerminal={() => {}} />}
+      {bootStep === 'desktop' && !terminalOpened && (
+        <MacDesktop 
+          onOpenTerminal={() => {}} 
+          // onChangeTheme={() => {}} // Commented out the change theme button
+        />
+      )}
       {terminalOpened && (
         <div className="terminal-wrapper">
           <div className="terminal-top-bar">
@@ -143,6 +148,7 @@ function App() {
             <span className="btn yellow" />
             <span className="btn green" />
           </div>
+          <div className="title-centered">Terminal — Marcus Chuong</div>
           <div className="terminal-body">
             <TerminalContent
               lines={lines}
