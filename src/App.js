@@ -14,6 +14,10 @@ function App() {
   const [isTyping, setIsTyping] = useState(false);
   const [currentTypingLine, setCurrentTypingLine] = useState('');
   const [typingSpeed, setTypingSpeed] = useState(30);
+  const [history, setHistory] = useState([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+  const [inputValue, setInputValue] = useState('');
+  
 
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -150,12 +154,27 @@ function App() {
           </div>
           <div className="title-centered">Terminal — Marcus Chuong</div>
           <div className="terminal-body">
+            <div className="terminal-output">
+              {lines.slice(-100).map((line, i) => (
+                <div key={i}>{line}</div>
+              ))}
+            </div>
             <TerminalContent
               lines={lines}
               isTyping={isTyping}
               currentTypingLine={currentTypingLine}
             />
-            {bootDone && <TerminalPrompt onCommand={handleCommand} />}
+            {bootDone && (
+              <TerminalPrompt
+                onCommand={handleCommand}
+                inputValue={inputValue}
+                setInputValue={setInputValue}
+                history={history}
+                setHistory={setHistory}
+                historyIndex={historyIndex}
+                setHistoryIndex={setHistoryIndex}
+              />
+            )}
           </div>
         </div>
       )}

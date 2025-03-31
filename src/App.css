@@ -130,8 +130,12 @@ body, html, #root {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   height: calc(100% - 36px);
-  overflow-y: auto;
   letter-spacing: -0.3px;
+  height: calc(100% - 36px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
 }
 
 .terminal-content {
@@ -193,4 +197,15 @@ body, html, #root {
   color: #ccc;
   font-size: 0.95rem;
   pointer-events: none;
+  width: 100%;
+  text-align: center;
+  padding-left: 40px; /* shift visually to balance buttons */
+  box-sizing: border-box;
+}
+
+.terminal-output {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }

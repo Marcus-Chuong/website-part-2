@@ -1,42 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-function TerminalPrompt({ onCommand }) {
-  const [input, setInput] = useState('');
-  const [history, setHistory] = useState([]);
-  const [historyIndex, setHistoryIndex] = useState(-1);
-
+function TerminalPrompt({
+  onCommand,
+  inputValue,
+  setInputValue,
+  history,
+  setHistory,
+  historyIndex,
+  setHistoryIndex
+}) {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      if (!input.trim()) return;
-      onCommand(input);
-      setHistory((prev) => [...prev, input]);
-      setInput('');
-      setHistoryIndex(-1);
-    }
-
-    if (e.key === 'ArrowUp') {
-      if (history.length === 0) return;
-      setHistoryIndex((i) => {
-        const newIndex = i <= 0 ? 0 : i - 1;
-        setInput(history[newIndex]);
-        return newIndex;
-      });
-    }
-
-    if (e.key === 'ArrowDown') {
-      if (history.length === 0) return;
-      setHistoryIndex((i) => {
-        const newIndex = i >= history.length - 1 ? history.length - 1 : i + 1;
-        setInput(history[newIndex] || '');
-        return newIndex;
-      });
-    }
-
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      const suggestions = ['help', 'about', 'projects', 'clear'];
-      const match = suggestions.find((cmd) => cmd.startsWith(input));
-      if (match) setInput(match);
+      if (inputValue.trim()) {
+        onCommand(inputValue);
+        setHistory((prev) => [...prev, inputValue]);
+        setHistoryIndex(-1);
+        setInputValue('');
+      }
+    } else if (e.key === 'ArrowUp') {
+      if (history.length > 0) {
+        const newIndex = historyIndex <= 0 ? history.length - 1 : historyIndex - 1;
+        setHistoryIndex(newIndex);
+        setInputValue(history[newIndex]);
+      }
+    } else if (e.key === 'ArrowDown') {
+      if (history.length > 0) {
+        const newIndex = historyIndex >= history.length - 1 ? 0 : historyIndex + 1;
+        setHistoryIndex(newIndex);
+        setInputValue(history[newIndex]);
+      }
     }
   };
 
@@ -44,9 +36,8 @@ function TerminalPrompt({ onCommand }) {
     <div className="terminal-prompt">
       <span>marcuschuong@macbook-pro ~ %</span>
       <input
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
         autoFocus
       />
